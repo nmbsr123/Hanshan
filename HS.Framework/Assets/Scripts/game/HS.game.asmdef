@@ -1,0 +1,17 @@
+{
+    "name": "HS.game",
+    "rootNamespace": "",
+    "references": [
+        "GUID:24c2a3b708cdcf34f892fd77f80f9dff",
+        "GUID:2a81c6962524d424a8ef5072bd3b0fa0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
