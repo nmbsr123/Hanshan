@@ -1,7 +1,6 @@
-﻿using framework.Log;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace framework.UI
+namespace framework
 {
     public abstract class BasePresenter
     { 

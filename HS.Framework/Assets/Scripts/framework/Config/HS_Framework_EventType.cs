@@ -1,4 +1,4 @@
-﻿namespace framework.Config
+﻿namespace framework
 {
       public enum HS_Framework_EventType
       {

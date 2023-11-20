@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using framework.Log;
-using framework.Resource;
-using UnityEditor;
 using UnityEngine;
 
-namespace framework.UI
+namespace framework
 {
     public enum ViewType
     {

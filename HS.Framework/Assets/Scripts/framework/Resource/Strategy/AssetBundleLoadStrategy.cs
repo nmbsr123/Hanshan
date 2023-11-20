@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace framework.Resource
+namespace framework
 {
     public class AssetBundleLoadStrategy : BaseLoadStrategy
     {

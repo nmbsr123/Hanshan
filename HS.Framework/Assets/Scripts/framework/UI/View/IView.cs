@@ -1,4 +1,4 @@
-﻿namespace framework.UI
+﻿namespace framework
 {
     public interface IView
     {

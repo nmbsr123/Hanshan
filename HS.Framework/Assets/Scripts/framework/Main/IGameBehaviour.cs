@@ -1,4 +1,4 @@
-﻿namespace game
+﻿namespace framework
 {
     public interface IGameUpdate
     {

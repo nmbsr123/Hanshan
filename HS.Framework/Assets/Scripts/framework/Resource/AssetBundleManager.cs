@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using framework.Config;
-using game;
 using UnityEngine;
 
-namespace framework.Resource
+namespace framework
 {
     public class AssetBundleManager : Singleton<AssetBundleManager>, IGameUpdate
     {

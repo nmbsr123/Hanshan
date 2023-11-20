@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using framework.Config;
 using UnityEngine;
 
-namespace framework.Resource
+namespace framework
 {
-    public enum EventType {
-        OnBundleLoaded,
-    }
-    
     public class BundleEntity
     {
         private string _bundleName = string.Empty; //资产名字

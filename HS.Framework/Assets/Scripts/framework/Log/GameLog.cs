@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace framework.Log
+namespace framework
 {
     public class GameLog
     {

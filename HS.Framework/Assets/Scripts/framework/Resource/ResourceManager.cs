@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace framework.Resource
+namespace framework
 {
     public class ResourceManager : Singleton<ResourceManager>, IManager 
     {

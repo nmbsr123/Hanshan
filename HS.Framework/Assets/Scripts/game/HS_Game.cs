@@ -1,6 +1,4 @@
 ﻿using framework;
-using framework.Resource;
-using framework.UI;
 using game.GameTable;
 
 namespace game
@@ -11,6 +9,6 @@ namespace game
         public static UIManager UIManager => UIManager.Instance;
         public static EventDispatch GameCommonEvent = new EventDispatch();
         public static GameTableManager GameTableManager => GameTableManager.Instance;
-
+        public static TimerManager TimerManager => TimerManager.Instance;
     }
 }

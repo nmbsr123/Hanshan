@@ -1,6 +1,5 @@
 ﻿using cfg;
 using framework;
-using framework.Log;
 using Luban;
 using UnityEngine;
 
@@ -18,7 +17,6 @@ namespace game.GameTable
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
         }
         
         private static ByteBuf LoadByteBuf(string file)

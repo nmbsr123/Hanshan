@@ -1,7 +1,7 @@
 ﻿namespace game.Config
 {
-    public class HS_Game_EventType
+    public enum HS_Game_EventType
     {
-        
+        OnGetUserId = 1,
     }
 }

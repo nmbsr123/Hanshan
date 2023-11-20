@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace framework.Resource
+namespace framework
 {
     public class LoaderHandler
     {
