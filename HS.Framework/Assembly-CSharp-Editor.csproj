@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\ClientTools.cs" />
+     <Compile Include="Assets\Editor\UITool.cs" />
      <Folder Include="Assets\Editor" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace framework
+namespace Framework
 {
     public class TimerManager : Singleton<TimerManager>, IManager, IGameUpdate, IGameFixUpdate
     {

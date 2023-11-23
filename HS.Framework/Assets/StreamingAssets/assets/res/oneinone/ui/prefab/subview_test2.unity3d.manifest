@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 221809979
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9c1fa78c05805457614535c6ae6ce424
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a92abfd2000198e8cce0c280bdca80e0
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/OneInOne/UI/Prefab/Subview_Test2.prefab
+Dependencies: []

@@ -1,8 +1,10 @@
-﻿using framework;
+﻿using Framework;
+using Game.Config;
+using UnityEngine;
 
-namespace game.UI.Presenter
+namespace Game.UI.Presenter
 {
-    public class Panel_Test1Presenter : MainViewPresenter
+    public class Panel_Test1Presenter : PanelViewPresenter
     {
         public override void OnCreate()
         {
@@ -10,6 +12,9 @@ namespace game.UI.Presenter
 
         public override void RefreshUI()
         {
+            HS.UIManager.ShowSubviewPresenter<Subview_Test1>(GetCom<Transform>("Subview_Test1_IGNORE_C").gameObject, this);
+            HS.UIManager.LoadSubviewPresenter<Subview_Test2>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestSubview1],
+                this, View.UIRoot.transform, isAsync:true);
         }
 
         public override void InitData()
@@ -36,9 +41,6 @@ namespace game.UI.Presenter
         private int index = 0;
         public override void Register()
         {
-            timerid = HS.TimerManager.AddTimer(1, test, 5);
-            HS.TimerManager.RemoveTimer(timerid);
-            HS.TimerManager.AddFixedTimer(1, test2);
         }
 
         public override void UnRegister()
@@ -47,6 +49,7 @@ namespace game.UI.Presenter
 
         public override void OnDispose()
         {
+            base.OnDispose();
         }
     }
 }

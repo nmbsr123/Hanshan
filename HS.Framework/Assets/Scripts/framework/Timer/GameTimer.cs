@@ -1,4 +1,4 @@
-﻿namespace framework
+﻿namespace Framework
 {
     public delegate void TimerFunction(int id);
     public class GameTimer

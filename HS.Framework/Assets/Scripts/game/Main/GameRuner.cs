@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using framework;
+using Framework;
 
-namespace game
+namespace Game
 {
     public class GameRuner : Singleton<GameRuner>
     {

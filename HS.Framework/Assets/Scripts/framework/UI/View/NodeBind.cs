@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace framework
+namespace Framework
 {
     public class NodeBind : MonoBehaviour
     {

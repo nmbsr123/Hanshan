@@ -1,4 +1,4 @@
-﻿namespace framework
+﻿namespace Framework
 {
       public enum HS_Framework_EventType
       {

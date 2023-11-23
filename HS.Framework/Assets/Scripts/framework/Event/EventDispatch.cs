@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace framework
+namespace Framework
 {
     public class EventDispatch
     {

@@ -1,4 +1,4 @@
-﻿namespace framework
+﻿namespace Framework
 {
     public class MessageViewPresenter : BasePresenter
     {

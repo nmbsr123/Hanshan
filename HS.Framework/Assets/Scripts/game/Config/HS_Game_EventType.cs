@@ -1,4 +1,4 @@
-﻿namespace game.Config
+﻿namespace Game.Config
 {
     public enum HS_Game_EventType
     {

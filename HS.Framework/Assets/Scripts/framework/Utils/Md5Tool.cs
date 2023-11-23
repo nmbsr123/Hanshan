@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace framework
+namespace Framework
 {
     public static class Md5Tool
     {

@@ -1,7 +1,7 @@
-﻿using framework;
-using game.GameTable;
+﻿using Framework;
+using Game.GameTable;
 
-namespace game
+namespace Game
 {
     public class HS
     {

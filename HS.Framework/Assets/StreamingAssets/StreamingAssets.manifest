@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 976008194
+CRC: 2822929895
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -17,20 +17,27 @@ AssetBundleManifest:
     Info_3:
       Name: assets/res/oneinone/ui/prefab/panel_test.unity3d
       Dependencies:
-        Dependency_0: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+        Dependency_0: assets/res/oneinone/ui/prefab/subview_test1.unity3d
+        Dependency_1: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
     Info_4:
       Name: assets/res/oneinone/ui/prefab/panel_test2.unity3d
       Dependencies:
         Dependency_0: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
     Info_5:
-      Name: assets/art/d_expertbuhochristmas.png
+      Name: assets/res/oneinone/ui/prefab/subview_test1.unity3d
       Dependencies: {}
     Info_6:
-      Name: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+      Name: assets/res/oneinone/ui/prefab/subview_test2.unity3d
       Dependencies: {}
     Info_7:
-      Name: assets/res/allinone/lubangen.unity3d
+      Name: assets/art/d_expertbuhochristmas.png
       Dependencies: {}
     Info_8:
+      Name: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+      Dependencies: {}
+    Info_9:
+      Name: assets/res/allinone/lubangen.unity3d
+      Dependencies: {}
+    Info_10:
       Name: assets/res/allinone/textmesh pro/sprites.unity3d
       Dependencies: {}

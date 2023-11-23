@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace framework
+namespace Framework
 {
     public class AssetBundleManager : Singleton<AssetBundleManager>, IGameUpdate
     {

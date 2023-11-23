@@ -1,4 +1,4 @@
-﻿namespace framework
+﻿namespace Framework
 {
     public abstract class Singleton<T> where T : new()
     {

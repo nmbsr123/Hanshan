@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace framework
+namespace Framework
 {
     public abstract class BasePresenter
     { 
         private View _view = null;
         private bool _isCache = false;
-        private UIConfig _uiConfig;
-        
+        public UIConfig UIConfig { get; set; }
+        public LoaderHandler Handler { get; set; }
         public View View
         {
             get
@@ -23,21 +23,6 @@ namespace framework
             set => _view = value;
         }
         
-        public UIConfig UIConfig
-        {
-            get
-            {
-                if (_uiConfig == null)
-                {
-                    GameLog.Error("_uiConfig is null");
-                    return null;
-                }
-
-                return _uiConfig;
-            }
-            set => _uiConfig = value;
-        }
-
         public T GetCom<T>(string nodeName) where T : Component
         {
             return View.GetCom<T>(nodeName);
@@ -48,7 +33,7 @@ namespace framework
         public abstract void Register();
         public abstract void UnRegister();
         public abstract void OnDispose();
-        private object _uiParam = null;
+        private BaseUIParam _uiParam = null;
 
         public bool IsActive()
         {
@@ -78,12 +63,12 @@ namespace framework
             _view.Active(bActive);
         }
 
-        public void SetParam(object param)
+        public void SetParam(BaseUIParam param)
         {
             _uiParam = param;
         }
 
-        protected T GetParam<T>() where T : class
+        protected T GetParam<T>() where T : BaseUIParam
         {
             return _uiParam as T;
         }
@@ -94,6 +79,7 @@ namespace framework
             {
                 return;
             }
+            _view.InitNodeBind();
             _view.Active(false);
             InitData();
             RefreshUI();
@@ -107,10 +93,16 @@ namespace framework
             UnRegister();
             if (!_isCache)
             {
-                if (_view.Handler != null)
+                if (_view != null && _view.UIRoot != null)
                 {
-                    _view.Handler.Unload();
+                    GameObject.Destroy(_view.UIRoot);
                 }
+                if (Handler != null)
+                {
+                    Handler.Unload();
+                }
+
+                _view = null;
             }
         }
     }

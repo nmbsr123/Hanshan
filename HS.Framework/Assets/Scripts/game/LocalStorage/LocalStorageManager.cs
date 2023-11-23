@@ -1,8 +1,8 @@
-﻿using game;
-using game.Config;
+﻿using Game;
+using Game.Config;
 using UnityEngine;
 
-namespace framework.LocalStorage
+namespace Framework.LocalStorage
 {
     public class LocalStorageManager : Singleton<LocalStorageManager>, IManager
     {

@@ -1,29 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace framework
+namespace Framework
 {
     public class View : IView
     {
-        private LoaderHandler _handler = null;
         private GameObject _uiRoot = null;
         private Dictionary<string, NodeBind> _dicNodeBind = new Dictionary<string, NodeBind>();
-
-        public LoaderHandler Handler
-        {
-            get
-            {
-                if (_handler == null)
-                {
-                    GameLog.Error("_handler is null");
-                    return null;
-                }
-
-                return _handler;
-            }
-            set => _handler = value;
-        }
-        
+        private bool _isInit = false;
         public GameObject UIRoot
         {
             get
@@ -41,16 +25,34 @@ namespace framework
         
         public void InitNodeBind()
         {
-            if (_uiRoot == null)
+            if (_isInit)
             {
-                GameLog.Error("_handler's asset is null");
                 return;
             }
+            if (_uiRoot == null)
+            {
+                GameLog.Error("_uiRoot's asset is null");
+                return;
+            }
+
+            Dictionary<int, bool> dicIgnoreCache = new Dictionary<int, bool>(5);
             var coms = _uiRoot.GetComponentsInChildren<NodeBind>();
             foreach (var com in coms)
             {
+                if (com.transform.parent.GetComponent<IgnoreChildrenNode>())
+                {
+                    dicIgnoreCache.Add(com.transform.GetInstanceID(), true);
+                    continue;
+                }
+                if (dicIgnoreCache.ContainsKey(com.transform.parent.GetInstanceID()))
+                {
+                    continue;
+                }
+                
                 _dicNodeBind.Add(com.name, com);
             }
+
+            _isInit = true;
         }
 
         public void SetCanvasOrder(int order)

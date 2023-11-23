@@ -1,9 +1,9 @@
 ﻿using cfg;
-using framework;
+using Framework;
 using Luban;
 using UnityEngine;
 
-namespace game.GameTable
+namespace Game.GameTable
 {
     public class GameTableManager : Singleton<GameTableManager>, IManager
     {

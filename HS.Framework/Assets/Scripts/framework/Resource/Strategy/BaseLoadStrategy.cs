@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace framework
+namespace Framework
 {
     public abstract class BaseLoadStrategy
     {

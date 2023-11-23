@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2429942840
+CRC: 1914835775
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a4b016a642fe9e96203ca74a89641012
+    Hash: fd62440f72b0e869962c8973ec117203
   TypeTreeHash:
     serializedVersion: 2
-    Hash: feb05da468ce560ee1e5b017044ed914
+    Hash: d5eaffc34094109b07f63d493bf162b8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,9 +18,9 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
@@ -81,5 +81,4 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Res/OneInOne/UI/Prefab/Panel_Test2.prefab
 Dependencies:
-- D:/UnityProject/HSNEW1/HS.Framework/Assets/StreamingAssets/assets/res/allinone/textmesh
-  pro/shaders/tmp_sdf-mobile.shader
+- D:/Hanshan/HS.Framework/Assets/StreamingAssets/assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader

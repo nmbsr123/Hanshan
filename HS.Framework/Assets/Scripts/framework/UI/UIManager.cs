@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace framework
+namespace Framework
 {
     public enum ViewType
     {
@@ -66,8 +66,10 @@ namespace framework
             
         }
 
-        public void ShowMainPresenter<T>(int uiid, UIConfig uiConfig, BaseUIParam uiParam = null, bool isAsync = false) where T : MainViewPresenter, new()
+        #region 不同类型界面打开方法
+        public void ShowMainPresenter<T>(UIConfig uiConfig, BaseUIParam uiParam = null, bool isAsync = false) where T : MainViewPresenter, new()
         {
+            var uiid = uiConfig.uiID;
             if (_dicMainPresenters.TryGetValue(uiid, out var mainViewPresenter))
             {
                 CheckAndStartStackView(uiid, uiConfig);
@@ -101,23 +103,109 @@ namespace framework
                 {
                     CheckAndStartStackView(uiid, uiConfig);
                     T presenter = new T();
+                    _dicMainPresenters.Add(uiid, presenter);
                     if (isAsync)
                     {
+                        _stackOperation.Push(uiid);
                         handler = ResourceManager.Instance.LoadAsync<GameObject>(uiConfig.path, delegate(Object o)
                         {
                             
-                            InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(o) as GameObject, uiParam);
+                            InitAndShowMainView(presenter, uiConfig, GameObject.Instantiate(o) as GameObject, uiParam);
                         });
+                        presenter.Handler = handler;
                         _dicLoaderHandlers.Add(uiid, handler);
                     }
                     else
                     {
                         handler = ResourceManager.Instance.LoadSync<GameObject>(uiConfig.path);
+                        presenter.Handler = handler;
                         _dicLoaderHandlers.Add(uiid, handler);
-                        InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(handler.asset as GameObject), uiParam);
+                        _stackOperation.Push(uiid);
+                        InitAndShowMainView(presenter, uiConfig, GameObject.Instantiate(handler.asset as GameObject), uiParam);
                     }
-                    _stackOperation.Push(uiid);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 打开子界面，gameObject已经存在
+        /// </summary>
+        /// <param name="self">子界面gameObject</param>
+        /// <param name="mainPresenter">父级界面</param>
+        /// <param name="uiParam">界面自定义参数</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T ShowSubviewPresenter<T>(GameObject self, MainViewPresenter mainPresenter, BaseUIParam uiParam = null) where T : SubviewPresenter, new()
+        {
+            T presenter = new T();
+            View view = new View();
+            view.UIRoot = self;
+            presenter.View = view;
+            mainPresenter.AddSubview(presenter);
+            presenter.Show();
+            return presenter;
+        }
+
+        public LoaderHandler LoadSubviewPresenter<T>(UIConfig uiConfig, MainViewPresenter mainPresenter, Transform parentRoot, BaseUIParam uiParam = null, bool isAsync = false) where T : SubviewPresenter, new()
+        {
+            var uiid = uiConfig.uiID;
+            T presenter = new T();
+            presenter.UIConfig = uiConfig;
+            LoaderHandler handler = null;
+            mainPresenter.AddSubview(presenter);
+            if (isAsync)
+            {
+                handler = ResourceManager.Instance.LoadAsync<GameObject>(uiConfig.path, delegate(Object o)
+                {
+                    if (!_dicLoaderHandlers.ContainsKey(uiid))
+                    {
+                        //子界面未加载完成，此时关闭父级界面。这种情况下会走进这里
+                        return;
+                    }
+                    InitAndShowSubview(presenter, uiConfig, GameObject.Instantiate(o) as GameObject, parentRoot, uiParam);
+                });
+                presenter.Handler = handler;
+                _dicLoaderHandlers.Add(uiid, handler);
+            }
+            else
+            {
+                handler = ResourceManager.Instance.LoadSync<GameObject>(uiConfig.path);
+                presenter.Handler = handler;
+                _dicLoaderHandlers.Add(uiid, handler);
+                InitAndShowSubview(presenter, uiConfig, GameObject.Instantiate(handler.asset as GameObject), parentRoot, uiParam);
+            }
+
+            return handler;
+        }
+
+        #endregion
+
+        public void RemoveLoaderHandler(int uiid)
+        {
+            if (_dicLoaderHandlers.ContainsKey(uiid))
+            {
+                _dicLoaderHandlers.Remove(uiid);
+            }
+            else
+            {
+                GameLog.Error("RemoveLoaderHandler Error " + uiid);
+            }
+        }
+
+        public void CloseCur()
+        {
+            if (_stackOperation.Count == 0)
+            {
+                return;
+            }
+            var lastUIID = _stackOperation.Pop();
+            if (_dicMainPresenters.TryGetValue(lastUIID, out var lastPresenter))
+            {
+                DisposePresenterByUIID(lastPresenter.UIConfig);
+            }
+            else
+            {
+                GameLog.Error("CloseCur Error");
             }
         }
 
@@ -196,7 +284,7 @@ namespace framework
             }
         }
         
-        private void InitAndShowPanel(BasePresenter presenter, UIConfig uiConfig, GameObject obj, BaseUIParam uiParam = null)
+        private void InitAndShowMainView(BasePresenter presenter, UIConfig uiConfig, GameObject obj, BaseUIParam uiParam = null)
         {
             obj.transform.SetParent(_dicTransforms[uiConfig.viewType]);
             var rect = obj.transform.GetComponent<RectTransform>();
@@ -205,8 +293,24 @@ namespace framework
             rect.localPosition = Vector3.zero;
             rect.localScale = Vector3.one;
             View view = new View();
-            view.Handler = _dicLoaderHandlers[uiConfig.uiID]; //一定取得到
             view.UIRoot = obj;
+            presenter.SetParam(uiParam);
+            presenter.View = view;
+            presenter.UIConfig = uiConfig;
+            presenter.Show();
+        }
+        
+        private void InitAndShowSubview(BasePresenter presenter, UIConfig uiConfig, GameObject obj, Transform parentRoot, BaseUIParam uiParam = null)
+        {
+            obj.transform.SetParent(parentRoot);
+            var rect = obj.transform.GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.zero;
+            rect.sizeDelta = Vector2.zero;
+            rect.localPosition = Vector3.zero;
+            rect.localScale = Vector3.one;
+            View view = new View();
+            view.UIRoot = obj;
+            presenter.SetParam(uiParam);
             presenter.View = view;
             presenter.UIConfig = uiConfig;
             presenter.Show();

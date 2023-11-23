@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1416818024
+CRC: 272898105
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 929b6f7ccbd76511d0374ac8788f516a
+    Hash: 9177fbbcfb95f3f96b8f213251721bfd
   TypeTreeHash:
     serializedVersion: 2
-    Hash: feb05da468ce560ee1e5b017044ed914
+    Hash: 9956185158641697cc44408e209b258d
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,13 +18,17 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ad1540f128a54418ae02abc62f45c645, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9a892814f25a489caef6600d90ee21e1, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -81,5 +85,5 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Res/OneInOne/UI/Prefab/Panel_Test.prefab
 Dependencies:
-- D:/UnityProject/HSNEW1/HS.Framework/Assets/StreamingAssets/assets/res/allinone/textmesh
-  pro/shaders/tmp_sdf-mobile.shader
+- D:/Hanshan/HS.Framework/Assets/StreamingAssets/assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+- D:/Hanshan/HS.Framework/Assets/StreamingAssets/assets/res/oneinone/ui/prefab/subview_test1.unity3d
