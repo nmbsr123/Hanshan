@@ -5,12 +5,14 @@ namespace framework
     public class TimerManager : Singleton<TimerManager>, IManager, IGameUpdate, IGameFixUpdate
     {
         private int _updateIndex = -1;
+        private int _fixedUpdateIndex = -1;
         private List<GameTimer> _updateTimers = new List<GameTimer>();
         private List<GameTimer> _fixedUpdateTimers = new List<GameTimer>();
         private List<int> _removeCache = new List<int>();
         public void Init()
         {
             _updateIndex = -1;
+            _fixedUpdateIndex = -1;
         }
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace framework
         /// <returns></returns>
         public int AddTimer(float time, TimerFunction timerFunction, int loopTimes = -1)
         {
-            if (loopTimes <= 0)
+            if (loopTimes <= 0 && loopTimes != -1)
             {
                 GameLog.Error("AddTimer Error");
                 return -1;
@@ -31,28 +33,92 @@ namespace framework
             return _updateIndex;
         }
 
+        public void RemoveTimer(int timerId)
+        {
+            GameTimer targetTimer = null;
+            foreach (var timer in _updateTimers)
+            {
+                if (timer.Id == timerId)
+                {
+                    targetTimer = timer;
+                    break;
+                }
+            }
+
+            if (targetTimer == null)
+            {
+                GameLog.Error($"找不到timer id = {timerId}");
+            }
+            else
+            {
+                targetTimer.NeedRemove = true;
+            }
+        }
+        
+        public void RemoveFixedTimer(int timerId)
+        {
+            GameTimer targetTimer = null;
+            foreach (var timer in _fixedUpdateTimers)
+            {
+                if (timer.Id == timerId)
+                {
+                    targetTimer = timer;
+                    break;
+                }
+            }
+
+            if (targetTimer == null)
+            {
+                GameLog.Error($"找不到timer id = {timerId}");
+            }
+            else
+            {
+                targetTimer.NeedRemove = true;
+            }
+        }
+
+        public int AddFixedTimer(float time, TimerFunction timerFunction, int loopTimes = -1)
+        {
+            if (loopTimes <= 0 && loopTimes != -1)
+            {
+                GameLog.Error("AddTimer Error");
+                return -1;
+            }
+            _fixedUpdateTimers.Add(new GameTimer(++_fixedUpdateIndex, time, timerFunction, loopTimes));
+            return _fixedUpdateIndex;
+        }
+
         public void Dispose()
         {
             _updateTimers.Clear();
             _fixedUpdateTimers.Clear();
             _updateIndex = -1;
+            _fixedUpdateIndex = -1;
         }
 
-        public void Update(float deltaTime)
+        private void Check(List<GameTimer> timerList, float deltaTime)
         {
-            if (_updateTimers.Count == 0)
+            for (int i = timerList.Count - 1; i >= 0; i--)
             {
-                return;
-            }
-            _removeCache.Clear();
-            foreach (var timer in _updateTimers)
-            {
+                var timer = timerList[i];
                 timer.AddTime(deltaTime);
                 //计时器到时间了
                 if (timer.IsDone)
                 {
+                    //这样写是为了注册了立马销毁的timer不执行回调函数
+                    if (timer.NeedRemove)
+                    {
+                        timerList.RemoveAt(i);
+                        continue;
+                    }
                     //执行回调，循环次数-1
                     timer.Invoke();
+                    //立马check一次，有可能在回调函数里remove了timer
+                    if (timer.NeedRemove)
+                    {
+                        timerList.RemoveAt(i);
+                        continue;
+                    }
                     //如果无限循环
                     if (timer.IsInfinite)
                     {
@@ -63,7 +129,7 @@ namespace framework
                         //如果循环次数为0，需要移除
                         if (timer.LoopTimes <= 0)
                         {
-                            _removeCache.Add(timer.Id);
+                            timerList.RemoveAt(i);
                         }
                         else
                         {
@@ -72,16 +138,26 @@ namespace framework
                     }
                 }
             }
-
-            foreach (var index in _removeCache)
-            {
-                _updateTimers.RemoveAt(index);
-            }
         }
 
-        public void FixedUpdate()
+        public void Update(float deltaTime)
         {
-            
+            if (_updateTimers.Count == 0)
+            {
+                return;
+            }
+
+            Check(_updateTimers, deltaTime);
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            if (_fixedUpdateTimers.Count == 0)
+            {
+                return;
+            }
+
+            Check(_fixedUpdateTimers, deltaTime);
         }
     }
 }

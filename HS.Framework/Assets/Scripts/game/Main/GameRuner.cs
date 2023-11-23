@@ -5,6 +5,7 @@ namespace game
 {
     public class GameRuner : Singleton<GameRuner>
     {
+        private const float _fixedDeltaTime = 0.02f;
         private List<IGameUpdate> _updateList = new List<IGameUpdate>();
         private List<IGameFixUpdate> _fixedUpdateList = new List<IGameFixUpdate>();
         private List<IGameLateUpdate> _lateUpdateList = new List<IGameLateUpdate>();
@@ -60,7 +61,7 @@ namespace game
         {
             foreach (var data in _fixedUpdateList)
             {
-                data.FixedUpdate();
+                data.FixedUpdate(_fixedDeltaTime);
             }
         }
 

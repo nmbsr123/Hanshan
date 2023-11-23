@@ -51,11 +51,11 @@
      <Compile Include="Assets\Scripts\game\LubanCode\item.EQuality.cs" />
      <Compile Include="Assets\Scripts\game\UI\Presenter\Panel_Test1Presenter.cs" />
      <Compile Include="Assets\Scripts\game\LubanCode\Item.cs" />
+     <Compile Include="Assets\Scripts\game\LocalStorage\LocalStorageManager.cs" />
      <Compile Include="Assets\Scripts\game\LubanCode\item.ItemExchange.cs" />
      <Compile Include="Assets\Scripts\game\LubanCode\item.TbItem.cs" />
      <Compile Include="Assets\Scripts\game\Main\GameRuner.cs" />
      <Compile Include="Assets\Scripts\game\GameTable\GameTableManager.cs" />
-     <Compile Include="Assets\Scripts\game\LocalStorage\LocalStorageManager.cs" />
      <Folder Include="Assets\Scripts\game\UI" />
      <None Include="Assets\Scripts\game\HS.game.asmdef" />
      <Folder Include="Assets\Scripts\game\UI\Definition" />

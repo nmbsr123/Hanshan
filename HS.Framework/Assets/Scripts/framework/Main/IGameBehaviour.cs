@@ -7,7 +7,7 @@
     
     public interface IGameFixUpdate
     {
-        void FixedUpdate();
+        void FixedUpdate(float deltaTime);
     }
 
     public interface IGameLateUpdate

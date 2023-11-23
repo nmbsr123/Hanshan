@@ -31,6 +31,7 @@ namespace game
             TimerManager.CreateInstance();
             TimerManager.Instance.Init();
             GameRuner.Instance.RegisterUpdate(TimerManager.Instance);
+            GameRuner.Instance.RegisterFixUpdate(TimerManager.Instance);
         }
 
         private void Start()

@@ -9,11 +9,24 @@
         private TimerFunction _function = null;
         private int _loopTimes = 0;
         private bool _isInfinite = false;
-        
+        private bool _needRemove = false;
         public int Id => _id;
         public int LoopTimes => _loopTimes;
         public bool IsDone => _time >= _maxTime;
         public bool IsInfinite => _isInfinite;
+
+        public bool NeedRemove
+        {
+            set
+            {
+                _needRemove = value;
+            }
+            get
+            {
+                return _needRemove;
+            }
+        }
+
         public GameTimer(int id, float time, TimerFunction function, int loopTimes)
         {
             if (loopTimes < 0 && loopTimes != -1)
@@ -25,6 +38,7 @@
             _maxTime = time;
             _function = function;
             _loopTimes = loopTimes;
+            _needRemove = false;
             if (_loopTimes == -1)
             {
                 _isInfinite = true;
