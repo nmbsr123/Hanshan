@@ -36,6 +36,10 @@ namespace Game.UI
         {
         }
 
+        public override void OnFocus()
+        {
+        }
+
         public override void OnDispose()
         {
             base.OnDispose();

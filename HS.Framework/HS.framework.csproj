@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Framework\Main\IGameBehaviour.cs" />
      <Compile Include="Assets\Scripts\Framework\UI\Presenter\BasePresenter.cs" />
      <Compile Include="Assets\Scripts\Framework\Resource\LoaderHandler.cs" />
+     <Compile Include="Assets\Scripts\Framework\UI\View\IgnoreChildrenNode.cs" />
      <Compile Include="Assets\Scripts\Framework\Resource\Strategy\AssetBundleLoadStrategy.cs" />
      <Compile Include="Assets\Scripts\Framework\Manager\Base\IManager.cs" />
      <Compile Include="Assets\Scripts\Framework\Singleton\Singleton.cs" />
@@ -67,7 +68,6 @@
      <Compile Include="Assets\Scripts\Framework\Resource\BundleEntity.cs" />
      <Compile Include="Assets\Scripts\Framework\Config\HS_Framework_EventType.cs" />
      <Compile Include="Assets\Scripts\Framework\Event\EventDispatch.cs" />
-     <Compile Include="Assets\Scripts\Framework\UI\View\IgnoreChildrenNode.cs" />
      <Folder Include="Assets\Scripts\Framework" />
      <Folder Include="Assets\Scripts\Framework\Log" />
      <Folder Include="Assets\Scripts\Framework\Singleton" />

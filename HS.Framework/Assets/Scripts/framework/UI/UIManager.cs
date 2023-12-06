@@ -202,6 +202,15 @@ namespace Framework
             if (_dicMainPresenters.TryGetValue(lastUIID, out var lastPresenter))
             {
                 DisposePresenterByUIID(lastPresenter.UIConfig);
+                if (_stackOperation.Count > 0)
+                {
+                    var reactiveUIID = _stackOperation.Pop();
+                    //当关闭当前界面的时候，需要调用上个界面的OnFocus
+                    if (_dicMainPresenters.TryGetValue(reactiveUIID, out var reactivePresenter))
+                    {
+                        reactivePresenter.OnFocus();
+                    }
+                }
             }
             else
             {
@@ -210,7 +219,7 @@ namespace Framework
         }
 
         /// <summary>
-        /// 界面栈只会处理PanelPresenter(一级界面)和DialogPresenter(二级界面)
+        /// 界面栈只会处理PanelPresenter(一级界面)和DialogPresenter(二级界面)，包含了大部分的业务逻辑界面
         /// </summary>
         /// <param name="uiid"></param>
         /// <param name="uiConfig"></param>

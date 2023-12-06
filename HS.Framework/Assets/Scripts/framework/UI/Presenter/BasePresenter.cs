@@ -32,6 +32,7 @@ namespace Framework
         public abstract void InitData();
         public abstract void Register();
         public abstract void UnRegister();
+        public abstract void OnFocus();
         public abstract void OnDispose();
         private BaseUIParam _uiParam = null;
 

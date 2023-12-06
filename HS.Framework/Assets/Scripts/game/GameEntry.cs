@@ -37,7 +37,6 @@ namespace Game
         private void Start()
         {
             HS.UIManager.ShowMainPresenter<Panel_Test1Presenter>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestPanel1], null, false);
-            HS.UIManager.CloseCur();
         }
 
         private void Update()

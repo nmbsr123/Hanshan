@@ -49,6 +49,10 @@ namespace Framework
             }
         }
 
+        public override void OnFocus()
+        {
+        }
+
         public void AddSubview(SubviewPresenter subviewPresenter)
         {
             if (_listSubviewPresenters == null)

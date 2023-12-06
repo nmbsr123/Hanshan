@@ -39,20 +39,50 @@ namespace Framework
             var coms = _uiRoot.GetComponentsInChildren<NodeBind>();
             foreach (var com in coms)
             {
-                if (com.transform.parent.GetComponent<IgnoreChildrenNode>())
+                if (com.transform.GetInstanceID() != _uiRoot.GetInstanceID() && com.transform.GetComponent<IgnoreChildrenNode>())
                 {
                     dicIgnoreCache.Add(com.transform.GetInstanceID(), true);
+                    _dicNodeBind.Add(com.name, com);
                     continue;
                 }
-                if (dicIgnoreCache.ContainsKey(com.transform.parent.GetInstanceID()))
+                if (CheckParentIgnore(com.transform, dicIgnoreCache))
                 {
                     continue;
                 }
-                
+
+                if (_dicNodeBind.ContainsKey(com.name))
+                {
+                    GameLog.Error("节点名字重复");
+                    return;
+                }
                 _dicNodeBind.Add(com.name, com);
             }
 
             _isInit = true;
+        }
+
+        private bool CheckParentIgnore(Transform selfTrs, Dictionary<int, bool> dicIgnoreCache)
+        {
+            Transform curTrs = selfTrs;
+            if (curTrs.parent.GetInstanceID() == _uiRoot.transform.GetInstanceID())
+            {
+                return false;
+            }
+            while (curTrs.parent)
+            {
+                if (dicIgnoreCache.ContainsKey(curTrs.parent.GetInstanceID()))
+                {
+                    dicIgnoreCache.Add(curTrs.GetInstanceID(), true);
+                    return true;
+                }
+
+                curTrs = curTrs.parent;
+                if (curTrs.parent.GetInstanceID() == _uiRoot.transform.GetInstanceID())
+                {
+                    break;
+                }
+            }
+            return false;
         }
 
         public void SetCanvasOrder(int order)
