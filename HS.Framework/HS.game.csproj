@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Game\HS_Game.cs" />
      <Compile Include="Assets\Scripts\Game\LubanCode\Tables.cs" />
      <Compile Include="Assets\Scripts\Game\Config\HS_Game_EventType.cs" />
+     <Compile Include="Assets\Scripts\Game\Reddot\ReddotNode.cs" />
      <Compile Include="Assets\Scripts\Game\LubanCode\test.AccessFlag.cs" />
      <Compile Include="Assets\Scripts\Game\UI\Presenter\Subview_Test2Presenter.cs" />
      <Compile Include="Assets\Scripts\Game\LubanCode\item.EQuality.cs" />
@@ -60,6 +61,7 @@
      <Compile Include="Assets\Scripts\Game\UI\Presenter\Panel_Test2Presenter.cs" />
      <Folder Include="Assets\Scripts\Game\UI" />
      <None Include="Assets\Scripts\Game\HS.game.asmdef" />
+     <Folder Include="Assets\Scripts\Game\Reddot" />
      <Folder Include="Assets\Scripts\Game\Config" />
      <Folder Include="Assets\Scripts\Game\GameTable" />
      <Folder Include="Assets\Scripts\Game\Main" />

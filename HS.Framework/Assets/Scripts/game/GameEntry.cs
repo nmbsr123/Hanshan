@@ -2,6 +2,7 @@
 using Framework.LocalStorage;
 using Game.Config;
 using Game.GameTable;
+using Game.Reddot;
 using Game.UI.Presenter;
 using UnityEngine;
 
@@ -37,6 +38,10 @@ namespace Game
         private void Start()
         {
             HS.UIManager.ShowMainPresenter<Panel_Test1Presenter>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestPanel1], null, false);
+            string path = "aaa/bbbbb/cc/rr/{0}/eeee";
+            ReddotManager.CreateInstance();
+            ReddotManager.Instance.Init();
+            ReddotManager.Instance.GetOrAddNode(path);
         }
 
         private void Update()
