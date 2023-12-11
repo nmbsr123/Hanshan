@@ -59,12 +59,16 @@
      <Compile Include="Assets\Scripts\Game\Main\GameRuner.cs" />
      <Compile Include="Assets\Scripts\Game\GameTable\GameTableManager.cs" />
      <Compile Include="Assets\Scripts\Game\UI\Presenter\Panel_Test2Presenter.cs" />
+     <Compile Include="Assets\Scripts\Game\Reddot\ReddotManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Extend\UnityExtend.cs" />
+     <Compile Include="Assets\Scripts\Game\Config\ReddotPathConfig.cs" />
      <Folder Include="Assets\Scripts\Game\UI" />
      <None Include="Assets\Scripts\Game\HS.game.asmdef" />
      <Folder Include="Assets\Scripts\Game\Reddot" />
      <Folder Include="Assets\Scripts\Game\Config" />
      <Folder Include="Assets\Scripts\Game\GameTable" />
      <Folder Include="Assets\Scripts\Game\Main" />
+     <Folder Include="Assets\Scripts\Game\Extend" />
      <Folder Include="Assets\Scripts\Game\LubanCode" />
      <Folder Include="Assets\Scripts\Game\UI\CustomComponent" />
      <Folder Include="Assets\Scripts\Game" />

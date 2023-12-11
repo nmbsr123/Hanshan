@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Framework;
+﻿using System.Collections.Generic;
+using Game.Extend;
+using UnityEngine;
 
 namespace Game.Reddot
 {
-    
-    
     public class ReddotNode
     {
         private readonly string _nodeName;
         private List<ReddotNode> _children;
         private ReddotNode _parentNode;
         private bool _isLeaf => _children == null;
+        private ReddotValueType _value = ReddotValueType.Null;
+        private GameObject _reddotObj = null;
 
+        public ReddotValueType Value => _value;
+        public bool IsLeaf => _isLeaf;
         public ReddotNode(string nodeName, ReddotNode parentNode)
         {
             _nodeName = nodeName;
             _parentNode = parentNode;
+        }
+
+        public void SetObj(GameObject gameObject)
+        {
+            _reddotObj = gameObject;
         }
 
         public void AddChild(ReddotNode childNode)
@@ -33,69 +39,50 @@ namespace Game.Reddot
             }
             _children.Add(childNode);
         }
-    }
 
-    public class ReddotManager : Singleton<ReddotManager>, IManager
-    {
-        private Dictionary<string, ReddotNode> _dicAllNode;
-        private const char SPLIT_TAG = '/';
-        private StringBuilder _sb;
-        private ReddotNode _rootNode;
-        
-        public void Init()
+        public void ChangeValue(ReddotValueType valueType = ReddotValueType.Default)
         {
-            _dicAllNode = new Dictionary<string, ReddotNode>();
-            _sb = new StringBuilder();
-            _rootNode = new ReddotNode("Root", null);
-        }
-
-        public ReddotNode GetOrAddNode(string path)
-        {
-            if (_dicAllNode.TryGetValue(path, out var targetNode))
+            if (valueType == ReddotValueType.Default)
             {
-                return targetNode;
+                ReddotValueType childValue = ReddotValueType.Null; 
+                foreach (var childNode in _children)
+                {
+                    if (childNode.Value == ReddotValueType.Has)
+                    {
+                        childValue = ReddotValueType.Has;
+                        break;
+                    }
+                }
+
+                _value = childValue;
+                UpdateObjActive();
+                if (_parentNode == null)
+                {
+                    return;
+                }
+                _parentNode.ChangeValue();
             }
-            else
+            else //如果是叶子节点
             {
-                if (path[path.Length - 1] == SPLIT_TAG)
+                _value = valueType;
+                UpdateObjActive();
+                if (_parentNode == null)
                 {
-                    GameLog.Error($"路径配置错误，不能以{SPLIT_TAG}结尾");
-                    return null;
+                    return;
                 }
-
-                _sb.Clear();
-                ReddotNode curNode = _rootNode;
-                for (int i = 0; i < path.Length; i++)
-                {
-                    if (path[i] == SPLIT_TAG)
-                    {
-                        var nodeName = _sb.ToString();
-                        if (!_dicAllNode.ContainsKey(nodeName))
-                        {
-                            //创建
-                            var childNode = new ReddotNode(nodeName, curNode);
-                            curNode.AddChild(childNode);
-                            _dicAllNode.Add(nodeName, childNode);
-                            curNode = childNode;
-                        }
-
-                        _sb.Append(SPLIT_TAG);
-                    }
-                    else
-                    {
-                        _sb.Append(path[i]);
-                    }
-                }
-                var leafNode = new ReddotNode(path, curNode);
-                curNode.AddChild(leafNode);
-                _dicAllNode.Add(path, leafNode);
-                return leafNode;
+                _parentNode.ChangeValue();
             }
         }
 
-        public void Dispose()
+        public void UpdateObjActive()
         {
-            _dicAllNode.Clear();
+            if (_reddotObj == null)
+            {
+                return;
+            }
+            _reddotObj.ActiveObj(_value == ReddotValueType.Has);
         }
     }
+
+   
 }

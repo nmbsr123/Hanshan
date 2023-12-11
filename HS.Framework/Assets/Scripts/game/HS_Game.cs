@@ -1,5 +1,6 @@
 ﻿using Framework;
 using Game.GameTable;
+using Game.Reddot;
 
 namespace Game
 {
@@ -10,5 +11,6 @@ namespace Game
         public static EventDispatch GameCommonEvent = new EventDispatch();
         public static GameTableManager GameTableManager => GameTableManager.Instance;
         public static TimerManager TimerManager => TimerManager.Instance;
+        public static ReddotManager ReddotManager => ReddotManager.Instance;
     }
 }

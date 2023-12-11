@@ -33,15 +33,21 @@ namespace Game
             TimerManager.Instance.Init();
             GameRuner.Instance.RegisterUpdate(TimerManager.Instance);
             GameRuner.Instance.RegisterFixUpdate(TimerManager.Instance);
+            //红点管理
+            ReddotManager.CreateInstance();
+            ReddotManager.Instance.Init();
         }
 
         private void Start()
         {
             HS.UIManager.ShowMainPresenter<Panel_Test1Presenter>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestPanel1], null, false);
-            string path = "aaa/bbbbb/cc/rr/{0}/eeee";
-            ReddotManager.CreateInstance();
-            ReddotManager.Instance.Init();
-            ReddotManager.Instance.GetOrAddNode(path);
+            HS.ReddotManager.ChangeValue(ReddotPathConfig.path1, ReddotValueType.Has, "1");
+            HS.ReddotManager.ChangeValue(ReddotPathConfig.path1, ReddotValueType.Null, "2");
+            HS.ReddotManager.ChangeValue(ReddotPathConfig.path2, ReddotValueType.Has, "1");
+            HS.ReddotManager.ChangeValue(ReddotPathConfig.path2, ReddotValueType.Null, "2");
+            
+            // HS.ReddotManager.ChangeValue(ReddotPathConfig.path4, ReddotValueType.Has);
+            // HS.ReddotManager.ChangeValue(ReddotPathConfig.path5, ReddotValueType.Has);
         }
 
         private void Update()

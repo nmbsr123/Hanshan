@@ -1,6 +1,8 @@
 ﻿using Framework;
 using Game.Config;
+using Game.Reddot;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.UI.Presenter
 {
@@ -15,6 +17,25 @@ namespace Game.UI.Presenter
             HS.UIManager.ShowSubviewPresenter<Subview_Test1>(GetCom<Transform>("Subview_Test1_IGNORE_C").gameObject, this);
             HS.UIManager.LoadSubviewPresenter<Subview_Test2>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestSubview1],
                 this, View.UIRoot.transform, isAsync:true);
+            var obj = GetCom<Transform>("ReddotPath1-1-1_C").gameObject;
+            HS.ReddotManager.BindObj(ReddotPathConfig.path1, obj, "1");
+            HS.ReddotManager.BindObj(ReddotPathConfig.path2, GetCom<Transform>("ReddotPath1-1-2_C").gameObject, "1");
+            HS.ReddotManager.BindObj(ReddotPathConfig.path2, GetCom<Transform>("ReddotPath1-2-1_C").gameObject, "2");
+            HS.ReddotManager.BindObj(ReddotPathConfig.path1, GetCom<Transform>("ReddotPath1-2-2_C").gameObject, "2");
+            
+            HS.ReddotManager.BindObj("11/11{0}", GetCom<Transform>("ReddotPath1-1_C").gameObject, "1");
+            HS.ReddotManager.BindObj("11/11{0}", GetCom<Transform>("ReddotPath1-2_C").gameObject, "2");
+            
+            HS.ReddotManager.BindObj("11", GetCom<Transform>("ReddotPath1_C").gameObject);
+
+            GetCom<Button>("btn_1_C").onClick.AddListener(() =>
+            {
+                HS.ReddotManager.ChangeValue(ReddotPathConfig.path2, ReddotValueType.Has, "2");
+            });
+            GetCom<Button>("btn_2_C").onClick.AddListener(() =>
+            {
+                HS.ReddotManager.ChangeValue(ReddotPathConfig.path1, ReddotValueType.Has, "2");
+            });
         }
 
         public override void InitData()
@@ -41,6 +62,7 @@ namespace Game.UI.Presenter
         private int index = 0;
         public override void Register()
         {
+            
         }
 
         public override void UnRegister()
