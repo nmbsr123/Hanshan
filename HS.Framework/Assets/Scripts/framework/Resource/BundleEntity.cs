@@ -22,7 +22,7 @@ namespace Framework
             mDependArray = dependArray;
             if (isAsync)
             {
-                ResourceManager.Instance.Event.AddEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
+                FrameworkEventHandler.Event.AddEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Framework
 
             if (mDependCompletedCount == mDependArray.Length)
             {
-                ResourceManager.Instance.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
+                FrameworkEventHandler.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Framework
             {
                 mAbBundle.Unload(true);
             }
-            ResourceManager.Instance.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
+            FrameworkEventHandler.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
         }
         
         public void ForthDispose()
@@ -75,7 +75,7 @@ namespace Framework
             }
 
             mRefCount = 0;
-            ResourceManager.Instance.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
+            FrameworkEventHandler.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
         }
 
         public void SetAssetBundle(AssetBundle assetBundle)

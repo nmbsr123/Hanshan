@@ -32,7 +32,6 @@ namespace Framework
         public abstract void InitData();
         public abstract void Register();
         public abstract void UnRegister();
-        public abstract void OnFocus();
         public abstract void OnDispose();
         private BaseUIParam _uiParam = null;
 
@@ -54,6 +53,15 @@ namespace Framework
             }
             return _view.IsLastSlibingIndex();
         }
+        
+        public void SetAsLastSlibingIndex()
+        {
+            if (_view == null)
+            {
+                return;
+            }
+            _view.SetAsLastSlibingIndex();
+        }
 
         public void Active(bool bActive)
         {
@@ -74,18 +82,16 @@ namespace Framework
             return _uiParam as T;
         }
 
-        public void Show()
+        public virtual void Show()
         {
             if (_view == null)
             {
                 return;
             }
             _view.InitNodeBind();
-            _view.Active(false);
             InitData();
             RefreshUI();
             Register();
-            _view.Active(true);
         }
         
         public void Dispose()

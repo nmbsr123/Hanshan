@@ -36,15 +36,18 @@ namespace Game
             //红点管理
             ReddotManager.CreateInstance();
             ReddotManager.Instance.Init();
+            
+            //
+            HS.ReddotManager.SetDirty(string.Format(ReddotPathConfig.path1, "1"));
+            ReddotManager.Instance.InitReddotNode<int>(string.Format(ReddotPathConfig.path1, "1"), ReddotCallbackConfig.CheckPath1, 100001);
+            ReddotManager.Instance.InitReddotNode<int>(string.Format(ReddotPathConfig.path2, "1"), ReddotCallbackConfig.CheckPath1, 100002);
+            ReddotManager.Instance.InitReddotNode<int>(string.Format(ReddotPathConfig.path1, "2"), ReddotCallbackConfig.CheckPath1, 100003);
+            ReddotManager.Instance.InitReddotNode<int>(string.Format(ReddotPathConfig.path2, "2"), ReddotCallbackConfig.CheckPath1, 100004);
         }
 
         private void Start()
         {
             HS.UIManager.ShowMainPresenter<Panel_Test1Presenter>(GameUIConfig.DicUIConfigs[GameUIConfig.UIID.TestPanel1], null, false);
-            HS.ReddotManager.ChangeValue(ReddotPathConfig.path1, ReddotValueType.Has, "1");
-            HS.ReddotManager.ChangeValue(ReddotPathConfig.path1, ReddotValueType.Null, "2");
-            HS.ReddotManager.ChangeValue(ReddotPathConfig.path2, ReddotValueType.Has, "1");
-            HS.ReddotManager.ChangeValue(ReddotPathConfig.path2, ReddotValueType.Null, "2");
             
             // HS.ReddotManager.ChangeValue(ReddotPathConfig.path4, ReddotValueType.Has);
             // HS.ReddotManager.ChangeValue(ReddotPathConfig.path5, ReddotValueType.Has);

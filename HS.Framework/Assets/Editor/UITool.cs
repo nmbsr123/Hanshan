@@ -105,18 +105,12 @@ namespace Game.UI
 
     private static string _savePath = Path.Combine(Application.dataPath, "Scripts/Game/UI/Presenter");
     
-    [MenuItem("GameObject/UITool/CreatePanelPresenter")]
+    [MenuItem("GameObject/UITool/CreateMainPresenter")]
     public static void CreatePanelPresenter()
     {
         CreateMainPresenter(ViewType.Panel);
     }
     
-    [MenuItem("GameObject/UITool/CreateDialogPresenter")]
-    public static void CreateDialogPresenter()
-    {
-        CreateMainPresenter(ViewType.Dialog);
-    }
-
     [MenuItem("GameObject/UITool/CreateSubviewPresenter")]
     public static void CreateSubviewPresenter()
     {
@@ -137,11 +131,7 @@ namespace Game.UI
         var presenterContent = MAIN_PRESENTER_TEMP.Replace("@ClassName", presenterName);
         if (viewType == ViewType.Panel)
         {
-            presenterContent = presenterContent.Replace("@BaseType", "PanelViewPresenter");
-        }
-        else if (viewType == ViewType.Dialog)
-        {
-            presenterContent = presenterContent.Replace("@BaseType", "DialogViewPresenter");
+            presenterContent = presenterContent.Replace("@BaseType", "MainViewPresenter");
         }
         else if (viewType == ViewType.Subview)
         {

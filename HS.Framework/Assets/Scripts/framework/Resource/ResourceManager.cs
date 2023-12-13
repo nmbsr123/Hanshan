@@ -6,7 +6,6 @@ namespace Framework
     public class ResourceManager : Singleton<ResourceManager>, IManager 
     {
         private BaseLoadStrategy _loadStrategy = null;
-        public EventDispatch Event = new EventDispatch();
 
         public void Init()
         {

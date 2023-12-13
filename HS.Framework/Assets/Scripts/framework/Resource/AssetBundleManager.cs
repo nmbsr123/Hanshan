@@ -187,7 +187,7 @@ namespace Framework
                     RecursionAddRef(bundleName);
                     bundleEntity.SetAssetBundle(request.assetBundle);
                     //通知依赖此bundle的父bundle
-                    ResourceManager.Instance.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
+                    FrameworkEventHandler.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
                     mDicLoadedBundleEntities.Add(bundleName, bundleEntity);
                     return bundleEntity;
                 }
@@ -218,7 +218,7 @@ namespace Framework
                 //Update里不会用到这个异步转同步的request所以加入默认值占位子
                 mDicAsyncBundleCreateRequests.Add(bundleName, default);
                 bundleEntity.SetAssetBundle(AssetBundle.LoadFromFile(GetPath(bundleName)));
-                ResourceManager.Instance.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
+                FrameworkEventHandler.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
             }
             else
             {
@@ -366,7 +366,7 @@ namespace Framework
                         var bundle = mDicAsyncBundleCreateRequests[keyVal.Key].assetBundle;
                         keyVal.Value.SetAssetBundle(bundle);
                         //通知依赖此bundle的父bundle
-                        ResourceManager.Instance.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  keyVal.Value);
+                        FrameworkEventHandler.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  keyVal.Value);
                         keyVal.Value.DoCallback();
                     }
                 }

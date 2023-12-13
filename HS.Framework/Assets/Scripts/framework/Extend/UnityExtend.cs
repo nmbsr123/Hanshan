@@ -12,5 +12,15 @@ namespace Game.Extend
             }
             self.SetActive(bActive);
         }
+
+        public static T GetAddComponent<T>(this GameObject self)  where T : Component
+        {
+            var com = self.GetComponent<T>();
+            if (com == null)
+            {
+                com = self.AddComponent<T>();
+            }
+            return com;
+        }
     }
 }

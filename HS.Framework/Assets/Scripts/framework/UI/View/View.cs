@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Extend;
 using UnityEngine;
+using UnityEngine.UI;
+
 namespace Framework
 {
     public class View : IView
@@ -92,14 +95,16 @@ namespace Framework
                 return;
             }
 
-            var canvas = _uiRoot.GetComponent<Canvas>();
+            var canvas = _uiRoot.GetAddComponent<Canvas>();
             if (canvas == null)
             {
                 GameLog.Error("canvas is null");
                 return;
             }
 
+            canvas.overrideSorting = true;
             canvas.sortingOrder = order;
+            _uiRoot.GetAddComponent<GraphicRaycaster>();
         }
 
         public T GetCom<T>(string nodeName) where T : Component
@@ -146,6 +151,16 @@ namespace Framework
                 return false;
             }
             return _uiRoot.transform.GetSiblingIndex() == _uiRoot.transform.parent.childCount - 1;
+        }
+        
+        public void SetAsLastSlibingIndex()
+        {
+            if (_uiRoot == null)
+            {
+                return;
+            }
+
+            _uiRoot.transform.SetAsLastSibling();
         }
     }
 }

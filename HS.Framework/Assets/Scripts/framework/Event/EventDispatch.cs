@@ -92,6 +92,43 @@ namespace Framework
                 evts.Remove(evt);
             }
         }
+        
+        public void AddEvent<T1, T2>(int eventId, Action<T1, T2> evt)
+        {
+            if (evt == null)
+            {
+                return;
+            }
+
+            List<Delegate> evts;
+            if (Events.TryGetValue(eventId, out evts))
+            {
+                if (evts != null)
+                {
+                    evts.Add(evt);
+                }
+            }
+            else
+            {
+                evts = new List<Delegate>(10);
+                evts.Add(evt);
+                Events.Add(eventId, evts);
+            }
+        }
+        
+        public void RemoveEvent<T1, T2>(int eventId, Action<T1, T2> evt)
+        {
+            if (_dicEvents == null || evt == null) 
+            {
+                return;
+            }
+
+            List<Delegate> evts;
+            if (Events.TryGetValue(eventId, out evts) && evts != null)
+            {
+                evts.Remove(evt);
+            }
+        }
 
         public void TriggerEvent(int eventId)
         {
@@ -132,6 +169,28 @@ namespace Framework
                     if (act != null)
                     {
                         act(v1);
+                    }
+                }
+            }
+        }
+        
+        public void TriggerEvent<T1, T2>(int eventId, T1 v1, T2 v2)
+        {
+            if (_dicEvents == null)
+            {
+                return;
+            }
+
+            List<Delegate> evts = null;
+            if (_dicEvents.TryGetValue(eventId, out evts) && evts != null)
+            {
+                Action<T1, T2> act = null;
+                for (int i = 0; i < evts.Count; i++)
+                {
+                    act = evts[i] as Action<T1, T2>;
+                    if (act != null)
+                    {
+                        act(v1, v2);
                     }
                 }
             }

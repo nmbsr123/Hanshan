@@ -8,6 +8,7 @@ namespace Game.Config
         public enum UIID
         {
             TestPanel1 = 1,
+            TestPanel2,
             TestSubview1
         }
         
@@ -18,6 +19,13 @@ namespace Game.Config
                 uiID = (int)UIID.TestPanel1,
                 viewType = ViewType.Panel,
                 path = "Assets/Res/OneInOne/UI/Prefab/Panel_Test.prefab",
+                isLobby = true
+            },
+            [UIID.TestPanel2] = new UIConfig()
+            {
+                uiID = (int)UIID.TestPanel2,
+                viewType = ViewType.Panel,
+                path = "Assets/Res/OneInOne/UI/Prefab/Panel_Test2.prefab",
                 isLobby = true
             },
             [UIID.TestSubview1] = new UIConfig()

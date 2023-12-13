@@ -25,9 +25,5 @@
         public override void OnDispose()
         {
         }
-
-        public override void OnFocus()
-        {
-        }
     }
 }
