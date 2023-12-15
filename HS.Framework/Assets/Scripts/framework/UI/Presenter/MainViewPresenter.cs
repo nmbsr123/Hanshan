@@ -6,9 +6,7 @@ namespace Framework
 {
     public class MainViewPresenter : BasePresenter
     {
-        private List<SubviewPresenter> _listSubviewPresenters = null;
         private bool _isFocus = false;
-        private Dictionary<string, ReddotNode> _dicReddotNodes = null;
 
         public bool IsFocus => _isFocus;
         public bool IsLobby()
@@ -18,8 +16,8 @@ namespace Framework
 
         public override void OnCreate()
         {
+            base.OnCreate();
             FrameworkEventHandler.Event.AddEvent((int)HS_Framework_EventType.OnSetReddotDirty, OnSetReddotDirty);
-            _dicReddotNodes = new Dictionary<string, ReddotNode>();
         }
 
         public override void Show()
@@ -46,6 +44,7 @@ namespace Framework
 
         public override void OnDispose()
         {
+            base.OnDispose();
             if (_listSubviewPresenters != null)
             {
                 foreach (var subviewPresenter in _listSubviewPresenters)
@@ -60,12 +59,6 @@ namespace Framework
                 _listSubviewPresenters.Clear();
                 _listSubviewPresenters = null;
             }
-
-            if (_dicReddotNodes != null)
-            {
-                _dicReddotNodes.Clear();
-                _dicReddotNodes = null;
-            }
             FrameworkEventHandler.Event.RemoveEvent((int)HS_Framework_EventType.OnSetReddotDirty, OnSetReddotDirty);
         }
 
@@ -74,7 +67,19 @@ namespace Framework
             Active(true);
             _isFocus = true;
             OnFocus();
-            OnSetReddotDirty();
+            if (_isFocus)
+            {
+                //先刷新自己的红点
+                OnSetReddotDirty();
+                //再刷新子界面的红点
+                if (_listSubviewPresenters != null)
+                {
+                    foreach (var subviewPresenter in _listSubviewPresenters)
+                    {
+                        subviewPresenter.OnSetReddotDirty();
+                    }
+                }
+            }
         }
         
         public void LostFocus()
@@ -97,51 +102,5 @@ namespace Framework
         {
             
         }
-
-        public void AddSubview(SubviewPresenter subviewPresenter)
-        {
-            if (_listSubviewPresenters == null)
-            {
-                _listSubviewPresenters = new List<SubviewPresenter>();
-            }
-            _listSubviewPresenters.Add(subviewPresenter);
-        }
-
-        public void BindReddot(string path, GameObject gameObject)
-        {
-            if (gameObject == null)
-            {
-                return;
-            }
-
-            if (_dicReddotNodes.TryGetValue(path, out var reddotNode))
-            {
-                reddotNode.SetObj(gameObject);
-            }
-            else
-            {
-                ReddotManager.Instance.BindObj(path, gameObject);
-                reddotNode = ReddotManager.Instance.GetNode(path);
-                _dicReddotNodes.Add(path, reddotNode);
-            }
-        }
-
-        /// <summary>
-        /// 监听红点设置脏位事件，如果当前Focus界面关联的红点包含脏位红点或者是脏位红点的父节点，那么立即刷新脏位红点
-        /// </summary>
-        /// <param name="dirtyPath"></param>
-        private void OnSetReddotDirty()
-        {
-            if (!_isFocus)
-            {
-                return;
-            }
-            //遍历关联的红点的子节点是否需要刷新
-            foreach (var keyVal in _dicReddotNodes)
-            {
-                ReddotManager.Instance.TraverseRefreshTree(keyVal.Value);
-            }
-        }
-        
     }
 }

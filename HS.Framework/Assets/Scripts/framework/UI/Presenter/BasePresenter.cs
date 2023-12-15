@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Game.Reddot;
+using UnityEngine;
 
 namespace Framework
 {
@@ -6,6 +8,9 @@ namespace Framework
     { 
         private View _view = null;
         private bool _isCache = false;
+        private Dictionary<string, ReddotNode> _dicReddotNodes = null;
+        protected List<SubviewPresenter> _listSubviewPresenters = null;
+
         public UIConfig UIConfig { get; set; }
         public LoaderHandler Handler { get; set; }
         public View View
@@ -27,12 +32,26 @@ namespace Framework
         {
             return View.GetCom<T>(nodeName);
         }
-        public abstract void OnCreate();
+
+        public virtual void OnCreate()
+        {
+            _dicReddotNodes = new Dictionary<string, ReddotNode>();
+        }
+
         public abstract void RefreshUI();
         public abstract void InitData();
         public abstract void Register();
         public abstract void UnRegister();
-        public abstract void OnDispose();
+
+        public virtual void OnDispose()
+        {
+            if (_dicReddotNodes != null)
+            {
+                _dicReddotNodes.Clear();
+                _dicReddotNodes = null;
+            }
+        }
+
         private BaseUIParam _uiParam = null;
 
         public bool IsActive()
@@ -92,6 +111,51 @@ namespace Framework
             InitData();
             RefreshUI();
             Register();
+        }
+        
+        /// <summary>
+        /// 监听红点设置脏位事件，如果当前Focus界面关联的红点包含脏位红点或者是脏位红点的父节点，那么立即刷新脏位红点
+        /// </summary>
+        /// <param name="dirtyPath"></param>
+        public void OnSetReddotDirty()
+        {
+            if (_dicReddotNodes == null)
+            {
+                return;
+            }
+            //遍历关联的红点的子节点是否需要刷新
+            foreach (var keyVal in _dicReddotNodes)
+            {
+                ReddotManager.Instance.TraverseRefreshTree(keyVal.Value);
+            }
+        }
+        
+        public void BindReddot(string path, GameObject gameObject)
+        {
+            if (gameObject == null)
+            {
+                return;
+            }
+
+            if (_dicReddotNodes.TryGetValue(path, out var reddotNode))
+            {
+                reddotNode.SetObj(gameObject);
+            }
+            else
+            {
+                ReddotManager.Instance.BindObj(path, gameObject);
+                reddotNode = ReddotManager.Instance.GetNode(path);
+                _dicReddotNodes.Add(path, reddotNode);
+            }
+        }
+        
+        public void AddSubview(SubviewPresenter subviewPresenter)
+        {
+            if (_listSubviewPresenters == null)
+            {
+                _listSubviewPresenters = new List<SubviewPresenter>();
+            }
+            _listSubviewPresenters.Add(subviewPresenter);
         }
         
         public void Dispose()
